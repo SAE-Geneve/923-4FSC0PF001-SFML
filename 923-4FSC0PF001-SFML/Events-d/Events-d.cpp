@@ -8,7 +8,9 @@
 
 
 static const int JOYSTICK_ID = 0;
-static const float JOYSTICK_DEAD_ZONE = 0.75f;
+static const float JOYSTICK_DEAD_ZONE = 6.f;
+constexpr int kTilemap_size = 24;
+constexpr int kTilemap_offset = 1;
 
 int main()
 {
@@ -21,6 +23,7 @@ int main()
 
 	// Setting up thh events
 	window.setKeyRepeatEnabled(true);
+	const auto winCenter = window.getSize();
 
 	// Loading a file as texture
 	sf::Texture up;
@@ -32,14 +35,24 @@ int main()
 	left.loadFromFile("data/sprites/ZeldaLeft.png");
 	right.loadFromFile("data/sprites/ZeldaRight.png");
 
+	sf::Texture	tilemap;
+	tilemap.loadFromFile("data/sprites/KenneyPlatformer_Character.png", sf::IntRect(6 * (kTilemap_size + kTilemap_offset), 1 * (kTilemap_size + kTilemap_offset), kTilemap_size, kTilemap_size));
+
+	// Using a sprite
+	// https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Sprite.php
+	sf::Sprite tilemapSprite;
+	tilemapSprite.setTexture(tilemap);
+	tilemapSprite.setOrigin(tilemap.getSize().x / 2.0f, tilemap.getSize().y / 2.0f);
+	tilemapSprite.setPosition(winCenter.x / 2.0f, winCenter.y / 2.0f);
+	
+
 	// Using a sprite
 	// https://www.sfml-dev.org/documentation/2.5.1/classsf_1_1Sprite.php
 	sf::Sprite sprite;
 	sprite.setTexture(up);
 	sprite.setOrigin(up.getSize().x / 2.0f, up.getSize().y / 2.0f);
-	const auto center = window.getSize();
-	sprite.setPosition(center.x / 2.0f, center.y / 2.0f);
-	//sprite.setScale(0.33f, 0.33f);
+	sprite.setPosition(winCenter.x / 2.0f, winCenter.y / 2.0f);
+	sprite.setScale(1.5f, 1.5f);
 
 	sf::Color backgroundColor(sf::Color::Black);
 
@@ -114,10 +127,10 @@ int main()
 
 		}
 		else {
-			if (axisXPosition > 0) {
+			if (axisXPosition < 0) {
 				sprite.setTexture(left);
 			}
-			else if (axisXPosition < 0) {
+			else if (axisXPosition > 0) {
 				sprite.setTexture(right);
 			}
 			position.x += (axisXPosition / 100.f) * speed;
@@ -127,7 +140,8 @@ int main()
 
 		// Window Display
 		window.clear(backgroundColor);
-		window.draw(sprite);
+		//window.draw(sprite);
+		window.draw(tilemapSprite);
 		window.display();
 
 	}

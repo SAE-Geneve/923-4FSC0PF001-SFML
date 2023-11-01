@@ -5,7 +5,9 @@
 #include "SFML/Main.hpp"
 #include "SFML/Graphics.hpp"
 
-constexpr float gravityForce = 1.0f;
+const sf::Vector2f gravityForce = sf::Vector2f(0.0f, 1.0f);
+
+const float kHorizontalMaxSpeed = 10;
 
 int main()
 {
@@ -26,11 +28,10 @@ int main()
 	shape.setOrigin(shape.getSize().x / 2, shape.getSize().y / 2);
 	shape.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
 
-	sf::Vector2f vitesse = sf::Vector2f(0, 0);
-
-
-	std::vector<int> a = { 6,1 };
-
+	sf::Vector2f speed = sf::Vector2f(0, 0);
+	sf::Vector2f acceleration = sf::Vector2f(0, 0);
+	sf::Vector2f jumpForce;
+	sf::Vector2f moveForce;
 
 	while (window.isOpen())
 	{
@@ -39,6 +40,34 @@ int main()
 		sf::Event event;
 
 		bool isGrounded = shape.getPosition().y >= (window.getSize().y - shape.getSize().y / 2);
+		jumpForce = sf::Vector2f(0.0f, 0.0f);
+		moveForce = sf::Vector2f(0.0f, 0.0f);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			if (isGrounded)
+			{
+				jumpForce = sf::Vector2f(0.0f, -30.0f);
+			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			if (speed.x > (-1 * kHorizontalMaxSpeed))
+			{
+				moveForce = sf::Vector2f(-5.0f, 0.0f);
+			}
+
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			if (speed.x < kHorizontalMaxSpeed)
+			{
+				moveForce = sf::Vector2f(5.0f, 0.0f);
+			}
+			
+		}
 
 		while (window.pollEvent(event))
 		{
@@ -46,26 +75,13 @@ int main()
 			switch (event.type)
 			{
 
-
 			case sf::Event::MouseButtonPressed:
 				newPos = sf::Mouse::getPosition(window);
-				vitesse = sf::Vector2f(0, 0);
+				speed = sf::Vector2f(0, 0);
 				shape.setPosition(newPos.x, newPos.y);
 				break;
 
-			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Space && isGrounded)
-				{
-					vitesse.y = -30.0f;
-				}
-				break;
-
-				// évènement "fermeture demandée" : on ferme la fenêtre
 			case sf::Event::Closed:
-				window.close();
-				break;
-
-			case sf::Event::Resized:
 				window.close();
 				break;
 
@@ -80,14 +96,41 @@ int main()
 		// Graphical Region
 		window.clear(sf::Color::Black);
 
+		// acceleration is a summ of forces ---------------------------------
+		acceleration = sf::Vector2f(0, 0);
+
+		if (!isGrounded)
+		{
+			acceleration += gravityForce;
+		}
+		else
+		{
+			speed.y = 0;
+		}
+
+		acceleration += jumpForce;
+		acceleration += moveForce;
+
+		// Speed is a sum of acceleration -----------------------------------------
+		speed += acceleration;
 		if(!isGrounded)
 		{
-			vitesse.y += gravityForce;
+			speed.x *= 0.75f;
 		}else
 		{
-			vitesse.y = 0;
+			speed.x *= 0.95f;
 		}
-		shape.setPosition(shape.getPosition() + vitesse);
+		
+
+		// Position is a sum of speeds -----------------------------------------------
+		shape.setPosition(shape.getPosition() + speed);
+
+		std::cout << std::endl;
+		std::cout << "is grounded ?" << isGrounded << std::endl;
+		std::cout << "Acceleration : \tX=" << acceleration.x << ":\tY=" << acceleration.y << std::endl;
+		std::cout << "Vitesse : \tX=" << speed.x << ":\tY=" << speed.y << std::endl;
+		std::cout << "Position : \tX=" << shape.getPosition().x << ":\tY=" << shape.getPosition().y << std::endl;
+
 		window.draw(shape);
 
 		// Window Display

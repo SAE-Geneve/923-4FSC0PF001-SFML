@@ -14,7 +14,7 @@ int main()
     bool drawShape = false;
 
     sf::CircleShape penta(50.0f, 5);
-    penta.setOrigin(penta.getRadius() / 2.0f, penta.getRadius() / 2.0f);
+    penta.setOrigin(penta.getRadius(), penta.getRadius());
     penta.setPosition(sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f));
 
     sf::Color backgroundColor(sf::Color::Blue);
@@ -27,6 +27,8 @@ int main()
         // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
         sf::Event event;
 
+
+        
         while (window.pollEvent(event))
         {
 
@@ -35,14 +37,13 @@ int main()
             switch (event.type)
             {
 
-
-                // évènement "fermeture demandée" : on ferme la fenêtre
+            // évènement "fermeture demandée" : on ferme la fenêtre
             case sf::Event::Closed:
                 window.close();
                 break;
 
             case sf::Event::LostFocus:
-                backgroundColor = sf::Color(50, 50, 150);
+                backgroundColor = sf::Color(50, 0, 0);
                 break;
 
             case sf::Event::GainedFocus:

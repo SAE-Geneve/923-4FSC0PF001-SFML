@@ -22,7 +22,6 @@ int main()
 
     // FOLLOW THE MOUSE
     sf::Vector2f position = penta.getPosition();
-    float smoothRatio = 0.9f;
 
     // CHANGE THE SHAPE
     int newPointCount;
@@ -68,6 +67,7 @@ int main()
         }
         // -------------------------------------------------------------------------------------------------
         // Option B: avec un petit décalage pour faire joli
+        float smoothRatio = 0.9f;
         penta.setPosition(
             smoothRatio * penta.getPosition().x + (1.0f - smoothRatio) * position.x,
             smoothRatio * penta.getPosition().y + (1.0f - smoothRatio) * position.y);

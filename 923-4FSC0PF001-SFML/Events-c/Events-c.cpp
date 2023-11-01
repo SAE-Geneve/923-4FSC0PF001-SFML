@@ -88,12 +88,12 @@ int main()
 				case sf::Keyboard::S:
 					std::cout << "DOWN vvvvvvvvvvvvvvvvvvvvvvvvvvv" << std::endl;
 
-					// Change texture
-					sprite.setTexture(down);
-					// Move the sprite
-					position = sprite.getPosition();
-					position.y += speed;
-					sprite.setPosition(position);
+					//// Change texture
+					//sprite.setTexture(down);
+					//// Move the sprite
+					//position = sprite.getPosition();
+					//position.y += speed;
+					//sprite.setPosition(position);
 					break;
 
 				case sf::Keyboard::Left:
@@ -101,23 +101,23 @@ int main()
 					std::cout << "LEFT <<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
 
 					// Change texture
-					sprite.setTexture(left);
-					// Move the sprite
-					position = sprite.getPosition();
-					position.x -= speed;
-					sprite.setPosition(position);
+					//sprite.setTexture(left);
+					//// Move the sprite
+					//position = sprite.getPosition();
+					//position.x -= speed;
+					//sprite.setPosition(position);
 					break;
 
 				case sf::Keyboard::Right:
 				case sf::Keyboard::D:
 					std::cout << "RIGHT >>>>>>>>>>>>>>>>>>>>>>>>>>" << std::endl;
 
-					// Change texture
-					sprite.setTexture(right);
-					// Move the sprite
-					position = sprite.getPosition();
-					position.x += speed;
-					sprite.setPosition(position);
+					//// Change texture
+					//sprite.setTexture(right);
+					//// Move the sprite
+					//position = sprite.getPosition();
+					//position.x += speed;
+					//sprite.setPosition(position);
 					break;
 
 				default:
