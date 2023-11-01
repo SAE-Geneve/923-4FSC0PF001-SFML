@@ -5,9 +5,9 @@
 #include "SFML/Main.hpp"
 #include "SFML/Graphics.hpp"
 
-const sf::Vector2f gravityForce = sf::Vector2f(0.0f, 1.0f);
+const sf::Vector2f kGravityForce = sf::Vector2f(0.0f, 1.0f);
 
-const float kHorizontalMaxSpeed = 10;
+constexpr float kHorizontalMaxSpeed = 10;
 
 int main()
 {
@@ -30,8 +30,8 @@ int main()
 
 	sf::Vector2f speed = sf::Vector2f(0, 0);
 	sf::Vector2f acceleration = sf::Vector2f(0, 0);
-	sf::Vector2f jumpForce;
-	sf::Vector2f moveForce;
+	sf::Vector2f jump_force;
+	sf::Vector2f move_force;
 
 	while (window.isOpen())
 	{
@@ -39,15 +39,15 @@ int main()
 		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
 		sf::Event event;
 
-		bool isGrounded = shape.getPosition().y >= (window.getSize().y - shape.getSize().y / 2);
-		jumpForce = sf::Vector2f(0.0f, 0.0f);
-		moveForce = sf::Vector2f(0.0f, 0.0f);
+		bool is_grounded = shape.getPosition().y >= (window.getSize().y - shape.getSize().y / 2);
+		jump_force = sf::Vector2f(0.0f, 0.0f);
+		move_force = sf::Vector2f(0.0f, 0.0f);
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			if (isGrounded)
+			if (is_grounded)
 			{
-				jumpForce = sf::Vector2f(0.0f, -30.0f);
+				jump_force = sf::Vector2f(0.0f, -30.0f);
 			}
 		}
 
@@ -55,7 +55,7 @@ int main()
 		{
 			if (speed.x > (-1 * kHorizontalMaxSpeed))
 			{
-				moveForce = sf::Vector2f(-5.0f, 0.0f);
+				move_force = sf::Vector2f(-5.0f, 0.0f);
 			}
 
 		}
@@ -64,21 +64,21 @@ int main()
 		{
 			if (speed.x < kHorizontalMaxSpeed)
 			{
-				moveForce = sf::Vector2f(5.0f, 0.0f);
+				move_force = sf::Vector2f(5.0f, 0.0f);
 			}
 			
 		}
 
 		while (window.pollEvent(event))
 		{
-			sf::Vector2i newPos;
+			sf::Vector2i new_pos;
 			switch (event.type)
 			{
 
 			case sf::Event::MouseButtonPressed:
-				newPos = sf::Mouse::getPosition(window);
+				new_pos = sf::Mouse::getPosition(window);
 				speed = sf::Vector2f(0, 0);
-				shape.setPosition(newPos.x, newPos.y);
+				shape.setPosition(new_pos.x, new_pos.y);
 				break;
 
 			case sf::Event::Closed:
@@ -99,21 +99,21 @@ int main()
 		// acceleration is a summ of forces ---------------------------------
 		acceleration = sf::Vector2f(0, 0);
 
-		if (!isGrounded)
+		if (!is_grounded)
 		{
-			acceleration += gravityForce;
+			acceleration += kGravityForce;
 		}
 		else
 		{
 			speed.y = 0;
 		}
 
-		acceleration += jumpForce;
-		acceleration += moveForce;
+		acceleration += jump_force;
+		acceleration += move_force;
 
 		// Speed is a sum of acceleration -----------------------------------------
 		speed += acceleration;
-		if(!isGrounded)
+		if(!is_grounded)
 		{
 			speed.x *= 0.75f;
 		}else
@@ -126,7 +126,7 @@ int main()
 		shape.setPosition(shape.getPosition() + speed);
 
 		std::cout << std::endl;
-		std::cout << "is grounded ?" << isGrounded << std::endl;
+		std::cout << "is grounded ?" << is_grounded << std::endl;
 		std::cout << "Acceleration : \tX=" << acceleration.x << ":\tY=" << acceleration.y << std::endl;
 		std::cout << "Vitesse : \tX=" << speed.x << ":\tY=" << speed.y << std::endl;
 		std::cout << "Position : \tX=" << shape.getPosition().x << ":\tY=" << shape.getPosition().y << std::endl;

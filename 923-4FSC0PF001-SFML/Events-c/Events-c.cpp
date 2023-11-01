@@ -38,21 +38,20 @@ int main()
 	sprite.setPosition(center.x / 2.0f, center.y / 2.0f);
 	//sprite.setScale(0.33f, 0.33f);
 
-	sf::Color backgroundColor(sf::Color::Black);
+	sf::Color background_color(sf::Color::Black);
 
 	const float speed = 8.0f;
 
 	while (window.isOpen())
 	{
-
 		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
 		sf::Event event;
 		sf::Keyboard keyboard;
 		sf::Vector2f position;
 
-		auto keyCode = sf::Keyboard::Up;
+		auto key_code = sf::Keyboard::Up;
 
-		if (sf::Keyboard::isKeyPressed(keyCode))
+		if (sf::Keyboard::isKeyPressed(key_code))
 		{
 			// Change texture
 			sprite.setTexture(up);
@@ -60,16 +59,14 @@ int main()
 			position = sprite.getPosition();
 			position.y -= speed;
 			sprite.setPosition(position);
-
 		}
 
 		std::cout << "Before while" << std::endl;
 		while (window.pollEvent(event))
 		{
-
 			switch (event.type)
 			{
-				// évènement "fermeture demandée" : on ferme la fenêtre
+			// évènement "fermeture demandée" : on ferme la fenêtre
 			case sf::Event::Closed:
 				window.close();
 				break;
@@ -88,36 +85,36 @@ int main()
 				case sf::Keyboard::S:
 					std::cout << "DOWN vvvvvvvvvvvvvvvvvvvvvvvvvvv" << std::endl;
 
-					//// Change texture
-					//sprite.setTexture(down);
-					//// Move the sprite
-					//position = sprite.getPosition();
-					//position.y += speed;
-					//sprite.setPosition(position);
+				//// Change texture
+				//sprite.setTexture(down);
+				//// Move the sprite
+				//position = sprite.getPosition();
+				//position.y += speed;
+				//sprite.setPosition(position);
 					break;
 
 				case sf::Keyboard::Left:
 				case sf::Keyboard::Q:
 					std::cout << "LEFT <<<<<<<<<<<<<<<<<<<<<<<<<<<" << std::endl;
 
-					// Change texture
-					//sprite.setTexture(left);
-					//// Move the sprite
-					//position = sprite.getPosition();
-					//position.x -= speed;
-					//sprite.setPosition(position);
+				// Change texture
+				//sprite.setTexture(left);
+				//// Move the sprite
+				//position = sprite.getPosition();
+				//position.x -= speed;
+				//sprite.setPosition(position);
 					break;
 
 				case sf::Keyboard::Right:
 				case sf::Keyboard::D:
 					std::cout << "RIGHT >>>>>>>>>>>>>>>>>>>>>>>>>>" << std::endl;
 
-					//// Change texture
-					//sprite.setTexture(right);
-					//// Move the sprite
-					//position = sprite.getPosition();
-					//position.x += speed;
-					//sprite.setPosition(position);
+				//// Change texture
+				//sprite.setTexture(right);
+				//// Move the sprite
+				//position = sprite.getPosition();
+				//position.x += speed;
+				//sprite.setPosition(position);
 					break;
 
 				default:
@@ -128,19 +125,15 @@ int main()
 			default:
 				break;
 			}
-
-
 		}
 		std::cout << "After while" << std::endl;
 
-		window.clear(backgroundColor);
+		window.clear(background_color);
 
 		window.draw(sprite);
 
 		// Window Display
 
 		window.display();
-
 	}
-
 }
