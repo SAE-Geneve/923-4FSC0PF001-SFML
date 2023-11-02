@@ -139,7 +139,9 @@ int main()
         // draw the tilemap
         for (int y = 0; y < TILEMAP_HEIGHT; y++) {
             for (int x = 0; x < TILEMAP_WIDTH; x++) {
-                if (tilemap[x+y*TILEMAP_WIDTH]) {
+
+                // Remplacer l'aiguillage vrai/faux par un aiguillage swith case qui dessine un sprite différent pour chaque valeur
+            	if (tilemap[x+y*TILEMAP_WIDTH]) {
                     // draw tile shape at correct position
                     tile_shape.setPosition(TILE_SIZE_PX * x, TILE_SIZE_PX * y);
                     window.draw(tile_shape);

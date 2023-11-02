@@ -27,6 +27,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_save_load", "LevelEditor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_player_movement", "LevelEditor\02_player_movement\02_player_movement.vcxproj", "{6E54237A-9B1A-4F8B-91F2-82CE8D25ECF0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0ECAE21D-FD23-45DA-9CDF-1C3FAC6C0C85}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Views", "Views\Views.vcxproj", "{283A67CE-C39C-4006-9381-75A34C9853B3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OOPHero", "OOPHero\OOPHero.vcxproj", "{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -123,6 +129,22 @@ Global
 		{6E54237A-9B1A-4F8B-91F2-82CE8D25ECF0}.Release|x64.Build.0 = Release|x64
 		{6E54237A-9B1A-4F8B-91F2-82CE8D25ECF0}.Release|x86.ActiveCfg = Release|Win32
 		{6E54237A-9B1A-4F8B-91F2-82CE8D25ECF0}.Release|x86.Build.0 = Release|Win32
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Debug|x64.ActiveCfg = Debug|x64
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Debug|x64.Build.0 = Debug|x64
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Debug|x86.ActiveCfg = Debug|Win32
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Debug|x86.Build.0 = Debug|Win32
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Release|x64.ActiveCfg = Release|x64
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Release|x64.Build.0 = Release|x64
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Release|x86.ActiveCfg = Release|Win32
+		{283A67CE-C39C-4006-9381-75A34C9853B3}.Release|x86.Build.0 = Release|Win32
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Debug|x64.ActiveCfg = Debug|x64
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Debug|x64.Build.0 = Debug|x64
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Debug|x86.Build.0 = Debug|Win32
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Release|x64.ActiveCfg = Release|x64
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Release|x64.Build.0 = Release|x64
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Release|x86.ActiveCfg = Release|Win32
+		{6D4AF6D3-8D0F-4C5C-B6F4-ED00CD685D70}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

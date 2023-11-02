@@ -29,7 +29,7 @@ int main()
 	shape.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
 
 	sf::Vector2f speed = sf::Vector2f(0, 0);
-	sf::Vector2f acceleration = sf::Vector2f(0, 0);
+	
 	sf::Vector2f jump_force;
 	sf::Vector2f move_force;
 
@@ -96,8 +96,8 @@ int main()
 		// Graphical Region
 		window.clear(sf::Color::Black);
 
-		// acceleration is a summ of forces ---------------------------------
-		acceleration = sf::Vector2f(0, 0);
+		// acceleration is a sum of forces ---------------------------------
+		sf::Vector2f acceleration = sf::Vector2f(0, 0);
 
 		if (!is_grounded)
 		{
