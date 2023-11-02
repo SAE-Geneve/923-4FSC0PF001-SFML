@@ -5,7 +5,6 @@
 #include "SFML/Main.hpp"
 #include "SFML/Graphics.hpp"
 
-
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
@@ -18,17 +17,19 @@ int main()
 	sf::Sprite background;
 	sf::Texture bgFile;
 
-	bgFile.loadFromFile("D:/5_Repos/C++/923-4FSC0PF001-SFML/923-4FSC0PF001-SFML/_Resources/sprites/village.png");
+	bgFile.loadFromFile("data/village.png");
 	background.setTexture(bgFile);
 	background.setOrigin(bgFile.getSize().x / 2, bgFile.getSize().y / 2);
-	background.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+	background.setPosition(0, 0);
 
-	sf::View view;
-	float view_size_x = 300, view_size_y = 300;
-	sf::FloatRect viewFrame = sf::FloatRect(window.getSize().x / 2, window.getSize().y / 2, view_size_x, view_size_y);
-
-	view.reset(viewFrame);
+	sf::View view(sf::Vector2f(0,0), sf::Vector2f(window.getSize().x, window.getSize().y));
 	window.setView(view);
+
+	sf::CircleShape center_mark;
+	center_mark.setRadius(5);
+	center_mark.setOrigin(5, 5);
+	center_mark.setPosition(0, 0);
+	center_mark.setFillColor(sf::Color::Red);
 
 	while (window.isOpen())
 	{
@@ -40,31 +41,53 @@ int main()
 		{
 
 			switch (event.type)
-			{
-
-				// évènement "fermeture demandée" : on ferme la fenêtre
+			{// évènement "fermeture demandée" : on ferme la fenêtre
 			case sf::Event::Closed:
 				window.close();
 				break;
 
 			case sf::Event::Resized:
-				window.close();
+				view.setSize(event.size.width, event.size.height);
+				window.setView(view);
+				break;
+
+			case sf::Event::KeyReleased:
+				if(event.key.code == sf::Keyboard::Left)
+				{
+					auto center = view.getCenter();
+
+					center.x -= 15;
+					view.setCenter(center);
+				}
+
+				if(event.key.code == sf::Keyboard::Right)
+				{
+					auto center = view.getCenter();
+
+					center.x += 15;
+					view.setCenter(center);
+				}
+
+				window.setView(view);
 				break;
 
 			case sf::Event::MouseWheelScrolled:
 				if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
 					// Handle vertical wheel scrolling
-					std::cout << "Wheel scroll delta : " << event.mouseWheelScroll.delta;
+					std::cout << "Wheel scroll delta : " << event.mouseWheelScroll.delta << std::endl;
 
-					if(event.mouseWheelScroll.delta != 0)
+					if (event.mouseWheelScroll.delta != 0)
 					{
-						view_size_x += 5 * event.mouseWheelScroll.delta;
-						view_size_y += 5 * event.mouseWheelScroll.delta;
-
-						viewFrame.width = view_size_x;
-						viewFrame.height = view_size_y;
-						view.reset(viewFrame);
+						if (event.mouseWheelScroll.delta > 0)
+						{
+							view.zoom(0.9f);
+						}
+						if (event.mouseWheelScroll.delta < 0)
+						{
+							view.zoom(1.1f);
+						}
 						window.setView(view);
+
 					}
 
 			default:
@@ -76,9 +99,10 @@ int main()
 
 
 			// Graphical Region
-			window.clear(sf::Color::Black);
+			window.clear(sf::Color::White);
 
 			window.draw(background);
+			window.draw(center_mark);
 
 			// Window Display
 			window.display();

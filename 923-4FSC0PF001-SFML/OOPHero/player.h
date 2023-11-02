@@ -71,6 +71,7 @@ public:
 
 		// Move the sprite
 		sf::Vector2f position = this->getPosition();
+
 		if(is_sprinting_)
 		{
 			position += direction_ * sprint_speed_;
