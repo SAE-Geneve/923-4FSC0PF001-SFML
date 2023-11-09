@@ -7,7 +7,8 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Views", sf::Style::Default, sf::ContextSettings(0, 0, 8));
+
 
 	// Basic Setup of the window
 	// Vertical sync, framerate
@@ -18,6 +19,8 @@ int main()
 	sf::Texture bgFile;
 
 	bgFile.loadFromFile("data/village.png");
+	bgFile.setSmooth(true);
+
 	background.setTexture(bgFile);
 	background.setOrigin(bgFile.getSize().x / 2, bgFile.getSize().y / 2);
 	background.setPosition(0, 0);
@@ -30,6 +33,9 @@ int main()
 	center_mark.setOrigin(5, 5);
 	center_mark.setPosition(0, 0);
 	center_mark.setFillColor(sf::Color::Red);
+	center_mark.setOutlineThickness(1.0F);
+	center_mark.setOutlineColor(sf::Color::Red);
+
 
 	while (window.isOpen())
 	{
@@ -78,14 +84,17 @@ int main()
 
 					if (event.mouseWheelScroll.delta != 0)
 					{
-						if (event.mouseWheelScroll.delta > 0)
+
+						view.zoom(1.0F - (event.mouseWheelScroll.delta / 5));
+
+					/*	if (event.mouseWheelScroll.delta > 0)
 						{
 							view.zoom(0.9f);
 						}
 						if (event.mouseWheelScroll.delta < 0)
 						{
 							view.zoom(1.1f);
-						}
+						}*/
 						window.setView(view);
 
 					}
@@ -101,7 +110,7 @@ int main()
 			// Graphical Region
 			window.clear(sf::Color::White);
 
-			window.draw(background);
+			//window.draw(background);
 			window.draw(center_mark);
 
 			// Window Display
