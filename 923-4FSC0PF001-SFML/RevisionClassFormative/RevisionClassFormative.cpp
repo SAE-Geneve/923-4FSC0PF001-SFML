@@ -132,7 +132,7 @@ int main()
 			current_color.a *= kFadeRatio;
 			b.setFillColor(current_color);
 
-			if (current_color.a == 0)
+			if (current_color.a <= 1)
 			{
 				// Game Over ----------------------------------------------
 				bGameOver = true;
