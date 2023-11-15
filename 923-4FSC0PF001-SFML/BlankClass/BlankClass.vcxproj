@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{eae44807-fc67-4a3e-9bfb-0dbfdf2acdcb}</ProjectGuid>
-    <RootNamespace>RevisionClassFormative</RootNamespace>
+    <ProjectGuid>{cbeeddb1-e189-411b-920b-c84331af8936}</ProjectGuid>
+    <RootNamespace>BlankClass</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,13 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="RevisionClassFormative.cpp" />
+    <ClCompile Include="BlankClass.cpp" />
+    <ClCompile Include="Truc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="Game.h" />
+    <ClInclude Include="Truc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
