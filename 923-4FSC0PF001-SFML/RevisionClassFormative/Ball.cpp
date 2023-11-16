@@ -5,8 +5,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 constexpr float kFadeRatio = 0.95f;
-const sf::Color kOrange = sf::Color(235, 152, 9);
-const sf::Color kWhite = sf::Color::White;
 
 Ball::Ball(const sf::Vector2u size)
 {
