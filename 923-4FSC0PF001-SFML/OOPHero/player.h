@@ -68,7 +68,6 @@ public:
 			sprite_.setTexture(right_);
 		}
 
-
 		// Move the sprite
 		sf::Vector2f position = this->getPosition();
 
@@ -82,6 +81,7 @@ public:
 		}
 		
 		this->setPosition(position);
+
 	}
 
 	void Sprint()

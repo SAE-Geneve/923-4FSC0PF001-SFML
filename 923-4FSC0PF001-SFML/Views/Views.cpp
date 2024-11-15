@@ -69,8 +69,8 @@ int main()
 				if(event.key.code == sf::Keyboard::Right)
 				{
 					auto center = view.getCenter();
-
 					center.x += 15;
+
 					view.setCenter(center);
 				}
 
@@ -86,15 +86,6 @@ int main()
 					{
 
 						view.zoom(1.0F - (event.mouseWheelScroll.delta / 5));
-
-					/*	if (event.mouseWheelScroll.delta > 0)
-						{
-							view.zoom(0.9f);
-						}
-						if (event.mouseWheelScroll.delta < 0)
-						{
-							view.zoom(1.1f);
-						}*/
 						window.setView(view);
 
 					}
@@ -110,7 +101,7 @@ int main()
 			// Graphical Region
 			window.clear(sf::Color::White);
 
-			//window.draw(background);
+			window.draw(background);
 			window.draw(center_mark);
 
 			// Window Display

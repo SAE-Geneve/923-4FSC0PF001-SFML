@@ -19,16 +19,20 @@ int main()
     if (!music.openFromFile("data/sounds/music.wav"))
         return -1;
     music.setLoop(true);
+    music.play();
+    music.stop();
+    music.pause();
+    music.setVolume(30);
 
 
     // Sound FX
-    sf::SoundBuffer soundFx1;
-    sf::SoundBuffer soundFx2;
+    sf::SoundBuffer soundFx_Laser;
+    sf::SoundBuffer soundFx_Ring;
     sf::Sound sound;
 
-    if (!soundFx1.loadFromFile("data/sounds/soundFx_Laser.wav"))
+    if (!soundFx_Laser.loadFromFile("data/sounds/soundFx_Laser.wav"))
         return -1;
-    if (!soundFx2.loadFromFile("data/sounds/soundFx_Ring.wav"))
+    if (!soundFx_Ring.loadFromFile("data/sounds/soundFx_Ring.wav"))
         return -1;
 
     // Basic Setup of the window
@@ -95,11 +99,11 @@ int main()
 	                {
 		                if (event.key.shift) {
 		                	std::cout << "Tiouuuuu ***************************" << std::endl;
-		                	sound.setBuffer(soundFx1);
+		                	sound.setBuffer(soundFx_Laser);
 		                }
 		                else {
 		                	std::cout << "Driiing ***************************" << std::endl;
-		                	sound.setBuffer(soundFx2);
+		                	sound.setBuffer(soundFx_Ring);
 		                }
 
                 		sound.play();
@@ -119,13 +123,13 @@ int main()
         }
 
         // Graphical Region
-        //window.clear(sf::Color::Black);
+        window.clear(sf::Color::Black);
 
         music.setVolume(volume);
         sound.setVolume(volume);
 
         // Window Display
-        //window.display();
+        window.display();
 
     }
 
