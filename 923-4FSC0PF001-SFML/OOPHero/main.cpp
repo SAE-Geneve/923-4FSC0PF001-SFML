@@ -10,69 +10,48 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML First Window");
+	sf::RenderWindow window(sf::VideoMode({ 1280, 720 }), "SFML First Window");
 
 	// Basic Setup of the window
 	// Vertical sync, framerate
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(30);
 
-	// Setting up thh events
+	// Setting up the events
 	window.setKeyRepeatEnabled(true);
 
-	Player link;
-	link.Load();
-
+	Player player;
 
 	sf::Color background_color(sf::Color::Black);
 
 	while (window.isOpen())
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
-		{
-			link.Sprint();
-		}
-
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			link.Move(sf::Vector2f(0, -1));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			link.Move(sf::Vector2f(0, 1));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			link.Move(sf::Vector2f(-1, 0));
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			link.Move(sf::Vector2f(1, 0));
-		}
-
 		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-		sf::Event event;
-		while (window.pollEvent(event))
+		while (const std::optional event = window.pollEvent())
 		{
-			switch (event.type)
+			if (event->is<sf::Event::Closed>())
 			{
-				// évènement "fermeture demandée" : on ferme la fenêtre
-			case sf::Event::Closed:
 				window.close();
-				break;
-
-			default:
-				break;
 			}
+			else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+			{
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+					window.close();
+			}
+
+			//player.HandleEvent(event);
+
+
 		}
+
+		player.Update();
 
 		window.clear(background_color);
 
-		window.draw(link);
+		window.draw(player);
 
 		// Window Display
-
 		window.display();
+
 	}
 }

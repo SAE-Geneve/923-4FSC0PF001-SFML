@@ -9,128 +9,113 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
+	sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "The Game");
 
-    // Musique
-    bool playPauseMusic = false;
-    float volume = 50;
+	// Musique
+	bool playPauseMusic = false;
+	float volume = 50;
 
-    sf::Music music;
-    if (!music.openFromFile("data/sounds/music.wav"))
-        return -1;
-    music.setLoop(true);
-    music.play();
-    music.stop();
-    music.pause();
-    music.setVolume(30);
+	sf::Music music;
+	if (!music.openFromFile("data/sounds/music.wav"))
+		return -1;
+	music.setLooping(true);
+	music.play();
+	music.stop();
+	music.pause();
+	music.setVolume(30);
 
 
-    // Sound FX
-    sf::SoundBuffer soundFx_Laser;
-    sf::SoundBuffer soundFx_Ring;
-    sf::Sound sound;
+	// Sound FX
+	sf::SoundBuffer buffSoundFxLaser;
+	sf::SoundBuffer buffSoundFxRing;
 
-    if (!soundFx_Laser.loadFromFile("data/sounds/soundFx_Laser.wav"))
-        return -1;
-    if (!soundFx_Ring.loadFromFile("data/sounds/soundFx_Ring.wav"))
-        return -1;
+	if (!buffSoundFxLaser.loadFromFile("data/sounds/soundFx_Laser.wav"))
+		return -1;
+	if (!buffSoundFxRing.loadFromFile("data/sounds/soundFx_Ring.wav"))
+		return -1;
 
-    // Basic Setup of the window
-    // Vertical sync, framerate
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(30);
+	sf::Sound soundLaser(buffSoundFxLaser);
+	sf::Sound soundRing(buffSoundFxRing);
 
-    while (window.isOpen())
-    {
-        
-        // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-        sf::Event event;
+	// Basic Setup of the window
+	// Vertical sync, framerate
+	window.setVerticalSyncEnabled(true);
+	window.setFramerateLimit(30);
 
-        while (window.pollEvent(event))
-        {
+	while (window.isOpen())
+	{
 
-            volume = music.getVolume();
+		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
+		while (const std::optional event = window.pollEvent())
+		{
 
-            switch (event.type)
-            {
+			if (event->is<sf::Event::Closed>())
+			{
+				window.close();
+			}
+			else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+			{
+				// Test de la valeur de la touche
+				std::cout << "Key pressed : " << static_cast<int>(keyPressed->code) << std::endl;
 
-                // évènement "fermeture demandée" : on ferme la fenêtre
-            case sf::Event::Closed:
-                window.close();
-                break;
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Up)
+				{
+					volume += 10;
+					if (volume >= 100)
+						volume = 100;
 
-            case sf::Event::KeyPressed:
+					std::cout << "Volume UP ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ " << volume << std::endl;
+				}
 
-                // Test de la valeur de la touche
-                std::cout << "Key pressed : " << event.key.code << std::endl;
-                switch (event.key.code)
-                {
-                case sf::Keyboard::Up:
-                    
-                    volume += 10;
-                    if (volume >= 100)
-                        volume = 100;
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Down)
+				{
+					volume -= 10;
+					if (volume <= 0)
+						volume = 0;
+					music.setVolume(volume);
+					soundLaser.setVolume(volume);
+					soundRing.setVolume(volume);
 
-                    std::cout << "Volume UP ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ " << volume << std::endl;
-                  break;
+					std::cout << "Volume DOWN vvvvvvvvvvvvvvvvvvvvvvvvvvv " << volume << std::endl;
+				}
 
-                case sf::Keyboard::Down:
-                    
-                    volume -= 10;
-                    if (volume <= 0)
-                        volume = 0;
-                    music.setVolume(volume);
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
+				{
+					std::cout << "PLAY / PAUSE !!!!!!!!!!!!!!!!!!!" << std::endl;
+					if (music.getStatus() != sf::Music::Status::Playing) {
+						music.play();
+					}
+					else {
+						music.pause();
+					}
+					std::cout << "Is playing ??? " << static_cast<int>(music.getStatus());
+				}
 
-                    std::cout << "Volume DOWN vvvvvvvvvvvvvvvvvvvvvvvvvvv " << volume << std::endl;
-                    break;
+				if (keyPressed->scancode == sf::Keyboard::Scancode::X)
+				{
+					if (keyPressed->shift) {
+						std::cout << "Tiouuuuu **************	*************" << std::endl;
+						//sound.setBuffer(soundFx_Laser);
+						soundLaser.play();
+					}
+					else {
+						std::cout << "Driiing ***************************" << std::endl;
+						//sound.setBuffer(soundFx_Ring);
+						soundRing.play();
+					}
 
-                case sf::Keyboard::Space:
-                    std::cout << "PLAY / PAUSE !!!!!!!!!!!!!!!!!!!" << std::endl;
-                    if (music.getStatus() != sf::Music::Status::Playing){
-                        music.play();
-                    }
-                    else {
-                        music.pause();
-                    }
-                    std::cout << "Is playing ??? " << music.getStatus();
-                    break;
+					
+				}
+			}
+			
+		}
+	}
 
-                case sf::Keyboard::X:
-	                {
-		                if (event.key.shift) {
-		                	std::cout << "Tiouuuuu ***************************" << std::endl;
-		                	sound.setBuffer(soundFx_Laser);
-		                }
-		                else {
-		                	std::cout << "Driiing ***************************" << std::endl;
-		                	sound.setBuffer(soundFx_Ring);
-		                }
+	// Graphical Region
+	window.clear(sf::Color::Black);
 
-                		sound.play();
-                		
-	                }
-                    break;
 
-                default:
-                    break;
-
-                }
-
-            default:
-                break;
-            }
-
-        }
-
-        // Graphical Region
-        window.clear(sf::Color::Black);
-
-        music.setVolume(volume);
-        sound.setVolume(volume);
-
-        // Window Display
-        window.display();
-
-    }
+	// Window Display
+	window.display();
 
 }

@@ -7,7 +7,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "The Game");
 
     // Basic Setup of the window
     // Vertical sync, framerate
@@ -18,26 +18,19 @@ int main()
     {
 
         // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-        sf::Event event;
-
-        while (window.pollEvent(event))
+        while (const std::optional event = window.pollEvent())
         {
 
-            switch (event.type)
+            if (event->is<sf::Event::Closed>())
             {
-
-                // évènement "fermeture demandée" : on ferme la fenêtre
-            case sf::Event::Closed:
                 window.close();
-                break;
-
-            case sf::Event::Resized:
-                window.close();
-                break;
-
-            default:
-                break;
             }
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                    window.close();
+            }
+            
 
         }
 

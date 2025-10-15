@@ -9,11 +9,11 @@
 #include "SFML/Graphics.hpp"
 
 
-constexpr float winFrameRate = 8.F;
+constexpr float winFrameRate = 30.F;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "The Game");
+	sf::RenderWindow window(sf::VideoMode({800, 600}), "The Game");
 
 	std::vector<sf::Texture> textures;
 	int idxTextures = 0;
@@ -40,11 +40,11 @@ int main()
 	}
 
 	// We need a sprite to display the texture
-	sf::Sprite sprite;
+	sf::Sprite sprite(textures[idxTextures]);
 
 	sprite.setTexture(textures[idxTextures]);
-	sprite.setOrigin(textures[idxTextures].getSize().x / 2.0f, textures[idxTextures].getSize().y / 2.0f);
-	sprite.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
+	sprite.setOrigin({textures[idxTextures].getSize().x / 2.0f, textures[idxTextures].getSize().y / 2.0f});
+	sprite.setPosition({window.getSize().x / 2.0f, window.getSize().y / 2.0f});
 
 	// Time management
 	sf::Clock clock;
@@ -54,23 +54,17 @@ int main()
 	{
 
 		// on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-		sf::Event event;
-
-		while (window.pollEvent(event))
+		while (const std::optional event = window.pollEvent())
 		{
-
-			switch (event.type)
+			if (event->is<sf::Event::Closed>())
 			{
-
-				// évènement "fermeture demandée" : on ferme la fenêtre
-			case sf::Event::Closed:
 				window.close();
-				break;
-
-			default:
-				break;
 			}
-
+			else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+			{
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+					window.close();
+			}
 		}
 
 		// Graphical Region
@@ -83,19 +77,21 @@ int main()
 		std::cout << std::endl << "Counting ..... " << totalElapsed.asMilliseconds() << std::endl;
 
 
-		//if (totalElapsed.asMilliseconds() >= floatPeriod) {
-		//    // Picking next texture
-		//    idxTextures++;
-		//    // Reset time
-		//    totalElapsed = totalElapsed.Zero;
-		//    // Switch to first frame
-		//    if (idxTextures >= textures.size())
-		//        idxTextures = 7;
-		//    std::cout << "New texture index : " << idxTextures << std::endl;
-		//}
+		if (totalElapsed.asMilliseconds() >= floatPeriod) {
+		    // Picking next texture
+		    idxTextures++;
+		    // Reset time
+		    totalElapsed = totalElapsed.Zero;
+		    // Switch to first frame
+		    if (idxTextures >= textures.size())
+		    {
+			    idxTextures = 7;
+		    }
+		    std::cout << "New texture index : " << idxTextures << std::endl;
+		}
 
-		idxTextures = 7 + (int)(totalElapsed.asMilliseconds() / floatPeriod) % (textures.size() - (7+1));
-		std::cout << "New texture index : " << idxTextures << std::endl;
+		//idxTextures = 7 + (int)(totalElapsed.asMilliseconds() / floatPeriod) % (textures.size() - (7+1));
+	//std::cout << "New texture index : " << idxTextures << std::endl;
 
 		// Load a texture
 		sprite.setTexture(textures[idxTextures]);
