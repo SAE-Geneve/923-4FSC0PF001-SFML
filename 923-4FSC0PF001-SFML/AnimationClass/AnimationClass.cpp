@@ -1,55 +1,70 @@
-// AnimationClass.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+
 
 #include <iostream>
+#include <SFML/System/Vector2.hpp>
 
-#include <iostream>
-
+#include "Animation.hpp"
 #include "SFML/Main.hpp"
 #include "SFML/Graphics.hpp"
 
+
+constexpr sf::Vector2f kCharacterSize(100, 100);
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "The Game");
+    sf::RenderWindow window(sf::VideoMode({1920, 1080}), "The Game");
+
+    sf::RectangleShape character(kCharacterSize);
+    Animation anim;
 
     // Basic Setup of the window
     // Vertical sync, framerate
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(30);
 
+
+    anim.Load("data\\sprites\\character");
+
+
     while (window.isOpen())
     {
 
         // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
-        sf::Event event;
-
-        while (window.pollEvent(event))
+        while (const std::optional event = window.pollEvent())
         {
 
-            switch (event.type)
+            if (event->is<sf::Event::Closed>())
             {
-
-                // évènement "fermeture demandée" : on ferme la fenêtre
-            case sf::Event::Closed:
                 window.close();
-                break;
-
-            case sf::Event::Resized:
-                window.close();
-                break;
-
-            default:
-                break;
             }
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                    window.close();
+            }
+            else if (const auto* keyPressed = event->getIf<sf::Event::KeyReleased>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Space)
+                {
+	                if (anim.IsPlaying())
+	                {
+                        anim.Pause();
+	                }else
+	                {
+                        anim.Play();
+	                }
+                }
+            }
+
 
         }
 
-
+        character.setTexture(anim.Get());
 
         // Graphical Region
         window.clear(sf::Color::Black);
 
-        //window.draw(something to draw);
+        window.draw(character);
 
         // Window Display
         window.display();
