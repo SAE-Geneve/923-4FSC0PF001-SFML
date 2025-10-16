@@ -10,11 +10,11 @@
 int main()
 {
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML First Window");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML First Window");
     bool drawShape = false;
 
     sf::CircleShape penta(50.0f, 5);
-    penta.setOrigin(penta.getRadius(), penta.getRadius());
+    penta.setOrigin({penta.getRadius(), penta.getRadius()});
     penta.setPosition(sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f));
 
     sf::Color backgroundColor(sf::Color::Blue);
@@ -26,10 +26,7 @@ int main()
 
         // on inspecte tous les évènements de la fenêtre qui ont été émis depuis la précédente itération
         sf::Event event;
-
-
-        
-        while (window.pollEvent(event))
+		while (window.pollEvent(event))
         {
 
             sf::FloatRect visibleArea(0.0f, 0.0f, event.size.width, event.size.height);

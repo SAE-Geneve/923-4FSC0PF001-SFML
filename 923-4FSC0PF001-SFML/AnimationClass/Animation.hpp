@@ -6,6 +6,8 @@
 
 constexpr float floatPeriod = 1.0f / 10.0f;
 
+class Projectile;
+
 class Animation
 {
 private:
@@ -19,13 +21,13 @@ private:
 
 	sf::Texture defaultTexture_;
 
+	void UpdateIdx();
+
 public:
 	bool Load(std::string path);
-	void UpdateIdx();
+	
 	void Play();
 	void Pause();
-
-	void OnEnd();
 
 	const sf::Texture* Get();
 	const bool IsPlaying();

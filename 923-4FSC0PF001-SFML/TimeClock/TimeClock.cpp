@@ -1,14 +1,24 @@
-// BlankClass.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// TimeClock.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include <iostream>
-#include "Truc.h"
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
+
+constexpr float shootInterval = 1.0f;
 
 int main()
 {
-    Truc truc1(1);
+	sf::Clock clock_;
+	sf::Time time_ = clock_.getElapsedTime();
+	float seconds = time_.asSeconds();
 
-    truc1 = Truc(10);
+	time_ += clock_.restart();
+	if (time_.asSeconds() > shootInterval)
+	{
+		// Shhhhhhoooooooooooooooooooooooooooooot !
+		time_ = sf::Time::Zero;
+	}
 
 }
 

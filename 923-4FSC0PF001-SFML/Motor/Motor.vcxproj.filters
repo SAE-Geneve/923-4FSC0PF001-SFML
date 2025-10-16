@@ -15,15 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BlankClass.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Truc.cpp">
+    <ClCompile Include="motor.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="starship_player.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Truc.h">
+    <ClInclude Include="motor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="starship_player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,6 +10,8 @@
 
 constexpr sf::Vector2f kCharacterSize(100, 100);
 
+
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode({1920, 1080}), "The Game");

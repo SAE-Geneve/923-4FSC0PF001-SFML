@@ -1,5 +1,6 @@
 #include "Animation.hpp"
 
+#include <array>
 #include <iostream>
 #include <string>
 #include <SFML/Graphics/Color.hpp>
@@ -11,29 +12,31 @@ namespace sf
 	class Texture;
 }
 
-bool Animation::Load(std::string path)
+bool Animation::Load(std::string folder)
 {
-	if (std::filesystem::is_empty(path))
+	// Controle que le repertoire contient des textures
+	if (std::filesystem::is_empty(folder))
 	{
 		return false;
 	}
 
+	// Création de la texture par défaut
 	sf::Image image({100,100}, sf::Color::Magenta);
 	defaultTexture_.loadFromImage(image);
 
 	// Load every textures--------------------------------------------------------------------------------------------------
-	for (const auto& entry : std::filesystem::directory_iterator(path))
+	for (const auto& file : std::filesystem::directory_iterator(folder))
 	{
-		std::cout << entry.path() << std::endl;
+		std::cout << file.path() << std::endl;
 
-		if (entry.path().extension() != ".png")
+		if (file.path().extension() != ".png")
 		{
 			std::cout << "Wrong file extension.\n";
 			textures_.clear();
 			return false;
 		}
 
-		textures_.emplace_back(entry.path());
+		textures_.emplace_back(file.path());
 	}
 
 	return true;
@@ -42,6 +45,9 @@ bool Animation::Load(std::string path)
 
 void Animation::UpdateIdx()
 {
+	
+
+
 	sf::Time elapsed = clock_.restart();
 	totalElapsed_ = totalElapsed_ + elapsed;
 	std::cout << std::endl << "Counting ..... " << totalElapsed_.asSeconds() << std::endl;
