@@ -11,6 +11,8 @@
 
 int main()
 {
+	constexpr sf::Vector2f playerSpawmPosition = {400, 580};
+
 	sf::RenderWindow window(sf::VideoMode({ 800, 600 }), "The Game");
 
 	Motor motor;
@@ -25,7 +27,7 @@ int main()
 	//sf::Time time = clock.getElapsedTime();
 
 	StarshipPlayer starship_player;
-	starship_player.Load();
+	starship_player.Load(playerSpawmPosition);
 
 	EnemyManager enemies;
 
@@ -61,8 +63,6 @@ int main()
 
 			}
 
-			
-
 		}
 
 		// Physics FRAME
@@ -74,6 +74,14 @@ int main()
 		circle.setPosition(position);
 
 		starship_player.HandleEvent();
+		if (starship_player.CheckCollisions(enemies.GetEntities()))
+		{
+			// Game Play ......................
+			starship_player.SetPosition(playerSpawmPosition);
+
+		}
+		starship_player.CheckProjectileCollisions(enemies.GetEntities());
+
 		starship_player.Update(window, deltaTime.asSeconds());
 
 		enemies.Update(window, deltaTime.asSeconds());

@@ -12,6 +12,7 @@ class EntityManager : public sf::Drawable
 public:
 	virtual void SpawnEntity(sf::Vector2f) = 0;
 	void Update(const sf::RenderWindow&, float dt);
+	std::vector<AutoEntity*>&  GetEntities();
 
 protected:
 	std::vector<AutoEntity*> entities_;

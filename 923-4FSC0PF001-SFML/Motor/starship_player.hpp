@@ -6,21 +6,28 @@
 #include <SFML/Window/Event.hpp>
 
 #include "entity_manager.hpp"
+#include "auto_entity.hpp"
 #include "motor.h"
 
-class StarshipPlayer : public sf::Drawable, public sf::Transformable
+class StarshipPlayer : public sf::Drawable
 {
 
 	sf::Texture texture;
+	sf::RectangleShape rect_;
+
 	Motor motor_;
 
-	ProjectileManager projectiles;
+	ProjectileManager projectileManager;
 
 
 public:
-	void Load();
+	void Load(sf::Vector2f);
 	void Update(sf::RenderWindow&, float);
+	bool CheckCollisions(std::vector<AutoEntity*>& others);
+	void CheckProjectileCollisions(std::vector<AutoEntity*>& others);
 	void HandleEvent();
+
+	void SetPosition(sf::Vector2f);
 
 protected:
 	void draw(sf::RenderTarget&, sf::RenderStates) const override;

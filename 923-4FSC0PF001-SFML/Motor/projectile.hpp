@@ -12,7 +12,7 @@ public:
 
 inline void Projectile::Move(float dt)
 {
-	setPosition(motor_.Move(dt));
+	rect_.setPosition(motor_.Move(dt));
 }
 
 inline void Projectile::Load()

@@ -8,7 +8,7 @@ void EntityManager::Update(const sf::RenderWindow& window, float dt)
 
 	erase_if(entities_, [&window](AutoEntity* p)
 	{
-		return p->getPosition().y < 0 || p->getPosition().y > window.getSize().y;
+		return p->GetPosition().y < 0 || p->GetPosition().y > window.getSize().y || p->StillAlive == false;
 	}
 	);
 
@@ -28,3 +28,9 @@ void EntityManager::draw(sf::RenderTarget& target, sf::RenderStates states) cons
 	}
 
 }
+
+std::vector<AutoEntity*>& EntityManager::GetEntities()
+{
+	return entities_;
+}
+

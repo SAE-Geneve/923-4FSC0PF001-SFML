@@ -12,7 +12,7 @@ public :
 
 inline void Enemy::Move(float dt)
 {
-	setPosition(motor_.Move(dt));
+	rect_.setPosition(motor_.Move(dt));
 }
 
 inline void Enemy::Load()
