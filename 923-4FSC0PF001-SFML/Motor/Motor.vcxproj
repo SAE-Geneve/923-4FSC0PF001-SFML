@@ -177,12 +177,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="auto_entity.cc" />
+    <ClCompile Include="enemy.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="motor.cc" />
+    <ClCompile Include="projectile.cc" />
+    <ClCompile Include="projectile_manager.cc" />
     <ClCompile Include="starship_player.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="auto_entity.hpp" />
+    <ClInclude Include="enemy.hpp" />
     <ClInclude Include="motor.h" />
+    <ClInclude Include="projectile.hpp" />
+    <ClInclude Include="projectile_manager.hpp" />
     <ClInclude Include="starship_player.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

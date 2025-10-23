@@ -14,15 +14,18 @@ void StarshipPlayer::Load()
 
 }
 
-void StarshipPlayer::Move(float dt)
+void StarshipPlayer::Update(sf::RenderWindow& window, float dt)
 {
 	setPosition(motor_.Move(dt));
+
+	projectiles.Update(window, dt);
+
 }
 
 void StarshipPlayer::HandleEvent()
 {
 
-	sf::Vector2f direction = motor_.GetDirection();
+	sf::Vector2f direction = {0,0};
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Down))
 	{
@@ -41,6 +44,9 @@ void StarshipPlayer::HandleEvent()
 		direction.x = 1;
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space)){
+		projectiles.SpawnProjectile(getPosition());
+	}
 
 	motor_.SetDirection(direction);
 }
@@ -51,6 +57,8 @@ void StarshipPlayer::draw(sf::RenderTarget& target, sf::RenderStates states) con
 	states.transform *= getTransform();
 
 	target.draw(sprite, states);
+	target.draw(projectiles);
+
 }
 
 
