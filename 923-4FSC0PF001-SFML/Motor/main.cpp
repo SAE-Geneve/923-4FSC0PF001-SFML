@@ -1,13 +1,12 @@
 
 
 #include <iostream>
+#include <random>
 
 #include "enemy.hpp"
 #include "SFML/Main.hpp"
 #include "SFML/Graphics.hpp"
 #include "Motor.h"
-#include "projectile.hpp"
-#include "projectile_manager.hpp"
 #include "starship_player.hpp"
 
 int main()
@@ -28,8 +27,7 @@ int main()
 	StarshipPlayer starship_player;
 	starship_player.Load();
 
-	Enemy enemy;
-	enemy.Load();
+	EnemyManager enemies;
 
 	
 	// Basic Setup of the window
@@ -56,6 +54,11 @@ int main()
 				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
 					window.close();
 
+				if (keyPressed->scancode == sf::Keyboard::Scancode::E)
+				{
+					enemies.SpawnEntity({ 400, 0 });
+				}
+
 			}
 
 			
@@ -73,7 +76,7 @@ int main()
 		starship_player.HandleEvent();
 		starship_player.Update(window, deltaTime.asSeconds());
 
-		enemy.Move(deltaTime.asSeconds());
+		enemies.Update(window, deltaTime.asSeconds());
 
 		//starship_player.setPosition({ 0,0, });
 
@@ -92,7 +95,7 @@ int main()
 		window.draw(circle);
 		window.draw(starship_player);
 
-		window.draw(enemy);
+		window.draw(enemies);
 
 		// Window Display
 		window.display();

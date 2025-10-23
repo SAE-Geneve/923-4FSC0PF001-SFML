@@ -5,8 +5,8 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "entity_manager.hpp"
 #include "motor.h"
-#include "projectile_manager.hpp"
 
 class StarshipPlayer : public sf::Drawable, public sf::Transformable
 {

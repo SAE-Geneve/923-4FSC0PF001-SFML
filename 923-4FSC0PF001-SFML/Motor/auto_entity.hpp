@@ -7,17 +7,18 @@ class AutoEntity : public sf::Drawable, public sf::Transformable
 {
 
 	sf::Texture texture;
-
+	
 protected:
 	Motor motor_;
+	void Load(std::string_view, sf::Vector2f, float);
 
 
 public:
-	void Load(std::string_view , sf::Vector2f , float );
 	void SetPosition(sf::Vector2f);
+	virtual void Move(float) = 0;
+	virtual void Load() = 0;
 
 protected:
-	virtual void Move(float) = 0;
 	void draw(sf::RenderTarget&, sf::RenderStates) const override;
 
 };

@@ -13,9 +13,5 @@
 //
 //}
 
-void Projectile::Move(float dt)
-{
-	setPosition(motor_.Move(dt));
-}
 
 

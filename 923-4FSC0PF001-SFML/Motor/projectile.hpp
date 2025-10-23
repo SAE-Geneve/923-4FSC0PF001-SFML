@@ -7,6 +7,18 @@ class Projectile : public AutoEntity
 
 public:
 	void Move(float) override;
-
+	void Load() override;
 };
+
+inline void Projectile::Move(float dt)
+{
+	setPosition(motor_.Move(dt));
+}
+
+inline void Projectile::Load()
+{
+	AutoEntity::Load("data\\sprites\\laserBlue01.png", { 0, -1 }, 600);
+}
+
+
 

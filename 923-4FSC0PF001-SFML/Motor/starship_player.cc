@@ -45,7 +45,7 @@ void StarshipPlayer::HandleEvent()
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Space)){
-		projectiles.SpawnProjectile(getPosition());
+		projectiles.SpawnEntity(getPosition());
 	}
 
 	motor_.SetDirection(direction);

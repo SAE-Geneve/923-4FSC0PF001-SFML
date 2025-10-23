@@ -1,24 +1,23 @@
 #pragma once
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Transformable.hpp>
 
-#include "motor.h"
+#include "auto_entity.hpp"
 
-class Enemy : public sf::Drawable, public sf::Transformable
+class Enemy : public AutoEntity
 {
-
-	sf::Texture texture;
-	Motor motor_;
-
-public:
-	void Load();
-	void Move(float);
-	void SetPosition(sf::Vector2f);
-
-protected:
-	void draw(sf::RenderTarget&, sf::RenderStates) const override;
-
+public :
+	void Load() override;
+	void Move(float) override;
 
 };
+
+inline void Enemy::Move(float dt)
+{
+	setPosition(motor_.Move(dt));
+}
+
+inline void Enemy::Load()
+{
+	AutoEntity::Load("data\\sprites\\enemyBlack4.png", { 0, 1 }, 300);
+}
+
 
